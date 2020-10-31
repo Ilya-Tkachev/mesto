@@ -12,6 +12,7 @@ function openPopup() {
     popupFieldName.value = profileFieldName.textContent;
     popupFieldInfo.value = profileFieldInfo.textContent;
     popup.classList.remove('popup_state_closed');
+    popupFieldName.focus();
 }
 
 function closePopup() {
@@ -37,5 +38,5 @@ popupSaveButton.addEventListener('click', savePopupChanges);
 document.addEventListener('keypress', function (event) {
     if (event.key === 'Enter' && isPopupOpened()) {
         savePopupChanges();
-    }    
-  });
+    }
+});
