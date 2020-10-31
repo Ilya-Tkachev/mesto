@@ -1,0 +1,23 @@
+.popup__container {
+    max-width: 430px;
+    min-width: 282px;
+    width: 100%;
+    min-height: 330px;
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+    .popup__container {
+        margin-left: 19px;
+        margin-right: 19px;
+        padding: 22px;
+    }
+}

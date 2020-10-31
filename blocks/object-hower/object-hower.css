@@ -1,0 +1,8 @@
+.object-hower {
+    opacity: 100%;
+    transition: opacity .5s ease-out;
+ }
+
+ .object-hower:hover {
+    opacity: .6;
+}

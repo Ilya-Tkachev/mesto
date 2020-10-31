@@ -1,0 +1,5 @@
+.element__bottom {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    align-items: center;
+}
