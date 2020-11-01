@@ -16,9 +16,7 @@
 <body class="body">
     <div class="page">
         <header class="header">
-            <div class="header__logo-container">
-                <img class="header__logo" src="./images/logo.svg" alt="Изображение Лого">
-            </div>
+            <img class="header__logo" src="./images/logo.svg" alt="Изображение Лого">
         </header>
 
         <main class="content">
@@ -37,17 +35,17 @@
                     <img src="./images/add.svg" alt="кнопка добавления">
                 </button>
             </section>
-            <form id="profile-form" name="profile-form">
-                <div class="popup popup_state_closed">
-                    <div class="popup__container">
-                        <button class="button button_type_close object-hower" type="button"></button>
-                        <h2 class="popup__title">Редактировать профиль</h2>
+            <div class="popup popup_state_closed">
+                <div class="popup__container">
+                    <button class="button button_type_close object-hower" type="button"></button>
+                    <h2 class="popup__title">Редактировать профиль</h2>
+                    <form id="profile-form" name="profile-form" class="form">
                         <input id="popup_field_name" class="popup__text" type="text" name="name">
                         <input id="popup_field_info" class="popup__text" type="text" name="info">
                         <button class="button button_type_save object-hower" type="submit">Сохранить</button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
             <section class="elements">
                 <div class="element">
                     <img class="element__photo" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>

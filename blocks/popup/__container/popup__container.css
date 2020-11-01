@@ -8,10 +8,6 @@
     position: relative;
     box-sizing: border-box;
     padding: 36px;
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-    justify-content: center;
 }
 
 @media screen and (max-width: 500px) {
