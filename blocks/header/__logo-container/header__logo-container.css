@@ -1,0 +1,15 @@
+.header__logo-container {
+    padding-bottom: 41px;
+    max-width: 142px;
+    max-height: 33px;
+    object-fit: cover;
+}
+
+@media (max-width: 880px) {
+    .header__logo-container {
+      margin-left: 27px;
+      padding-bottom: 31.6px;
+      max-width: 103.74px;
+      max-height: 24.4px;
+    }
+}

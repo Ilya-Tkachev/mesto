@@ -16,75 +16,91 @@
 <body class="body">
     <div class="page">
         <header class="header">
-            <img class="header__logo" src="./images/logo.svg" alt="Изображение Лого">
+            <div class="header__logo-container">
+                <img class="header__logo" src="./images/logo.svg" alt="Изображение Лого">
+            </div>
         </header>
 
         <main class="content">
             <section class="profile">
                 <img class="profile__avatar" src="./images/kysto.png" alt="Фото Кусто">
-                <div class="profile-info">
+                <div class="profile__info">
                     <div class="profile__text">
                         <h1 class="profile__heading text-overflow">Жак-Ив Кусто</h1>
-                        <h2 class="profile__description text-overflow">Исследователь океана</h2>
+                        <p class="profile__description text-overflow">Исследователь океана</p>
                     </div>
-                    <button class="button button_type_eddit object-hower">
+                    <button class="button button_type_eddit object-hower" type="button">
                         <img src="./images/edit.svg" alt="кнопка редактирования">
                     </button>
                 </div>
-                <button class="button button_type_add object-hower">
+                <button class="button button_type_add object-hower" type="button">
                     <img src="./images/add.svg" alt="кнопка добавления">
                 </button>
             </section>
-            <div class="popup popup_state_closed">
-                <div class="popup__container">
-                    <button class="button button_type_close object-hower"></button>
-                    <h2 class="popup__title">Редактировать профиль</h2>
-                    <input id="popupFieldName" class="popup__text" type="text">
-                    <input id="popupFieldInfo" class="popup__text" type="text">
-                    <button class="button button_type_save object-hower">Сохранить</button>
+            <form id="profile-form" name="profile-form">
+                <div class="popup popup_state_closed">
+                    <div class="popup__container">
+                        <button class="button button_type_close object-hower" type="button"></button>
+                        <h2 class="popup__title">Редактировать профиль</h2>
+                        <input id="popup_field_name" class="popup__text" type="text" name="name">
+                        <input id="popup_field_info" class="popup__text" type="text" name="info">
+                        <button class="button button_type_save object-hower" type="submit">Сохранить</button>
+                    </div>
                 </div>
-            </div>
+            </form>
             <section class="elements">
                 <div class="element">
-                    <img class="photo-grid__item" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>
+                    <img class="element__photo" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>
                     <div class="element__bottom">
                         <h2 class="element__title text-overflow">Карачаевск</h2>
-                        <img class="object-hower" src="./images/like.svg" alt="кнопка лайк">
+                        <button class="button button_type_like object-hower" type="button">
+                            <img src="./images/like.svg" alt="кнопка лайк">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="photo-grid__item" src="./images/gora_elbrys.png" alt="Фото горы Эльбрус"/>
+                    <img class="element__photo" src="./images/gora_elbrys.png" alt="Фото горы Эльбрус"/>
                     <div class="element__bottom">
                         <h2 class="element__title text-overflow">Гора Эльбрус</h2>
-                        <img class="object-hower" src="./images/like.svg" alt="кнопка лайк">
+                        <button class="button button_type_like object-hower" type="button">
+                            <img src="./images/like.svg" alt="кнопка лайк">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="photo-grid__item" src="./images/dombai.png" alt="Фото горы Домбай"/>
+                    <img class="element__photo" src="./images/dombai.png" alt="Фото горы Домбай"/>
                     <div class="element__bottom">
                         <h2 class="element__title text-overflow">Домбай</h2>
-                        <img class="object-hower" src="./images/like.svg" alt="кнопка лайк">
+                        <button class="button button_type_like object-hower" type="button">
+                            <img src="./images/like.svg" alt="кнопка лайк">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="photo-grid__item" src="./images/gora_elbrys.png" alt="Фото горы Эльбрус"/>
+                    <img class="element__photo" src="./images/gora_elbrys.png" alt="Фото горы Эльбрус"/>
                     <div class="element__bottom">
                         <h2 class="element__title text-overflow">Гора Эльбрус</h2>
-                        <img class="object-hower" src="./images/like.svg" alt="кнопка лайк">
+                        <button class="button button_type_like object-hower" type="button">
+                            <img src="./images/like.svg" alt="кнопка лайк">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="photo-grid__item" src="./images/dombai.png" alt="Фото горы Домбай"/>
+                    <img class="element__photo" src="./images/dombai.png" alt="Фото горы Домбай"/>
                     <div class="element__bottom">
                         <h2 class="element__title text-overflow">Домбай</h2>
-                        <img class="object-hower" src="./images/like.svg" alt="кнопка лайк">
+                        <button class="button button_type_like object-hower" type="button">
+                            <img src="./images/like.svg" alt="кнопка лайк">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
-                    <img class="photo-grid__item" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>
+                    <img class="element__photo" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>
                     <div class="element__bottom">
                         <h2 class="element__title text-overflow">Карачаево-Черкесия</h2>
-                        <img class="object-hower" class="element__img" src="./images/like.svg" alt="кнопка лайк">
+                        <button class="button button_type_like object-hower" type="button">
+                            <img src="./images/like.svg" alt="кнопка лайк">
+                        </button>
                     </div>
                 </div>
             </section>

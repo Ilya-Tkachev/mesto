@@ -1,10 +1,10 @@
-.profile-info {
+.profile__info {
     display: flex;
     margin-right: auto;
 }
 
 @media (max-width: 680px) {
-    .profile-info {
+    .profile__info {
         margin: 0;
         margin-bottom: 36px;
         text-align: center;
