@@ -1,3 +1,5 @@
 .element__photo {
     display: block;
+    width: 282px;
+    height: 282px;
 }

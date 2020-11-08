@@ -46,68 +46,41 @@
                     </form>
                 </div>
             </div>
-            <section class="elements">
-                <div class="element">
-                    <img class="element__photo" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>
-                    <div class="element__bottom">
-                        <h2 class="element__title text-overflow">Карачаевск</h2>
-                        <button class="button button_type_like object-hower" type="button">
-                            <img src="./images/like.svg" alt="кнопка лайк">
-                        </button>
-                    </div>
+            <div id="photo_add" class="popup popup_state_closed">
+                <div class="popup__container">
+                    <button id="photo_add_close" class="button button_type_close object-hower" type="button"></button>
+                    <h2 class="popup__title">Новое место</h2>
+                    <form id="photo_add_form" name="profile-form" class="form">
+                        <input id="photo_add_name" class="popup__text" type="text" name="photo_name" placeholder="Название">
+                        <input id="photo_add_url" class="popup__text" type="text" name="photo_url" placeholder="Ссылка на картинку">
+                        <button class="button button_type_save object-hower" type="submit">Сохранить</button>
+                    </form>
                 </div>
-                <div class="element">
-                    <img class="element__photo" src="./images/gora_elbrys.png" alt="Фото горы Эльбрус"/>
-                    <div class="element__bottom">
-                        <h2 class="element__title text-overflow">Гора Эльбрус</h2>
-                        <button class="button button_type_like object-hower" type="button">
-                            <img src="./images/like.svg" alt="кнопка лайк">
-                        </button>
-                    </div>
+            </div>
+            <div id="image-popup" class="popup popup_state_closed">
+                <div class="image-popup__container">
+                    <button id="image-popup_close" class="button button_type_close object-hower" type="button"></button>
+                    <img class="image-popup__image"/>
+                    <p class="image-popup__text"></p>
                 </div>
-                <div class="element">
-                    <img class="element__photo" src="./images/dombai.png" alt="Фото горы Домбай"/>
-                    <div class="element__bottom">
-                        <h2 class="element__title text-overflow">Домбай</h2>
-                        <button class="button button_type_like object-hower" type="button">
-                            <img src="./images/like.svg" alt="кнопка лайк">
-                        </button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img class="element__photo" src="./images/gora_elbrys.png" alt="Фото горы Эльбрус"/>
-                    <div class="element__bottom">
-                        <h2 class="element__title text-overflow">Гора Эльбрус</h2>
-                        <button class="button button_type_like object-hower" type="button">
-                            <img src="./images/like.svg" alt="кнопка лайк">
-                        </button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img class="element__photo" src="./images/dombai.png" alt="Фото горы Домбай"/>
-                    <div class="element__bottom">
-                        <h2 class="element__title text-overflow">Домбай</h2>
-                        <button class="button button_type_like object-hower" type="button">
-                            <img src="./images/like.svg" alt="кнопка лайк">
-                        </button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img class="element__photo" src="./images/carachaevsk.png" alt="Фото разрушеной церкви"/>
-                    <div class="element__bottom">
-                        <h2 class="element__title text-overflow">Карачаево-Черкесия</h2>
-                        <button class="button button_type_like object-hower" type="button">
-                            <img src="./images/like.svg" alt="кнопка лайк">
-                        </button>
-                    </div>
-                </div>
-            </section>
+            </div>
+            <section class="elements"></section>
         </main>
 
         <footer class="footer">
             <p class="footer__copyright">&copy; 2020. Mesto Russia</p>
         </footer>
     </div>
+    <template id='element_template'>
+        <div class="element">
+            <img class="element__photo"/> <!-- set src and alt here -->
+            <button class="button_type_delete object-hower" type="button"></button>
+            <div class="element__bottom">
+                <h2 class="element__title text-overflow"><!-- set name here --></h2>
+                <button class="button button_type_like object-hower" type="button"></button>
+            </div>
+        </div>
+    </template>
     <script src="./scripts/script.js"></script>
 </body>
 
