@@ -1,14 +1,18 @@
+const profilePopup = document.querySelector('#profile-popup');
 const profileFieldName = document.querySelector('.profile__heading');
 const profileFieldInfo = document.querySelector('.profile__description');
-
-const popup = document.querySelector('.popup');
 const popupFieldName = document.querySelector('#popup_field_name');
 const popupFieldInfo = document.querySelector('#popup_field_info');
 
 const addPhotoPopup = document.querySelector('#photo_add');
 const addPhotoFormElement = document.querySelector('#photo_add_form');
+const addPhotoName = document.querySelector('#photo_add_name');
+const addPhotoUrl = document.querySelector('#photo_add_url');
 
 const imagePopup = document.querySelector('#image-popup');
+const imagePopupImage = imagePopup.querySelector('.image-popup__image');
+const imagePopupText = imagePopup.querySelector('.image-popup__text');
+const elements = document.querySelector('.elements');
 
 const initialCards = [
     {
@@ -38,46 +42,44 @@ const initialCards = [
 ];
 
 function fillPhotoGrid(cards) {
-    cards.forEach(function (card) {
-        const gridElement = document.querySelector('#element_template').content.cloneNode(true);
-
-        const photo = gridElement.querySelector('.element__photo');
-        photo.src = card.link;
-        photo.alt = "Фото: " + card.name;
-        const gtidBottom = gridElement.querySelector('.element__bottom');
-        gtidBottom.querySelector('.element__title').textContent = card.name;
-
-        const buttonTypeDelete = gridElement.querySelector('.button_type_delete');
-        buttonTypeDelete.addEventListener('click', deleteElement);
-
-        const buttonTypeLike = gtidBottom.querySelector('.button_type_like');
-        buttonTypeLike.addEventListener('click', likeElement);
-
-        photo.addEventListener('click', openImagePopup);
-
-        document.querySelector('.elements').prepend(gridElement);
+    cards.forEach(card => {
+        const gridElement = creareCard(card);
+        elements.prepend(gridElement);
     });
 }
 
-function openPopup() {
+function creareCard(card) {
+    const gridElement = document.querySelector('#element_template').content.cloneNode(true);
+    const photo = gridElement.querySelector('.element__photo');
+    photo.src = card.link;
+    photo.alt = "Фото: " + card.name;
+    const gtidBottom = gridElement.querySelector('.element__bottom');
+    gtidBottom.querySelector('.element__title').textContent = card.name;
+    gridElement.querySelector('.button_type_delete').addEventListener('click', deleteElement);
+    gtidBottom.querySelector('.button_type_like').addEventListener('click', likeElement);
+    photo.addEventListener('click', () => openImagePopup(card));
+    return gridElement;
+}
+
+function openPopup(popup) {
+    popup.classList.toggle('popup_state_opened');
+}
+
+function closePopup(popup) {
+    popup.target.closest('.popup').classList.toggle('popup_state_opened');
+}
+
+function openProfilePopup(event) {
     popupFieldName.value = profileFieldName.textContent;
     popupFieldInfo.value = profileFieldInfo.textContent;
-    popup.classList.remove('popup_state_closed');
-    popup.classList.add('popup_state_opened');
-    popupFieldName.focus();
+    openPopup(profilePopup);
 }
 
-function closePopup() {
-    popup.classList.remove('popup_state_opened');
-    popup.classList.add('popup_state_closed');
-}
-
-// Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 function formSubmitHandler(event) {
-    event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
+    event.preventDefault();
     profileFieldName.textContent = popupFieldName.value;
     profileFieldInfo.textContent = popupFieldInfo.value;
-    closePopup();
+    closePopup(event);
 }
 
 function likeElement(event) {
@@ -89,55 +91,45 @@ function deleteElement(event) {
 }
 
 function openAddPhoto() {
-    addPhotoPopup.classList.remove('popup_state_closed');
-    addPhotoPopup.classList.add('popup_state_opened');
-    popupFieldName.focus();
-}
-
-function closeAddPhoto() {
-    addPhotoPopup.classList.remove('popup_state_opened');
-    addPhotoPopup.classList.add('popup_state_closed');
+    addPhotoFormElement.reset();
+    openPopup(addPhotoPopup);
 }
 
 function addElement(event) {
-    event.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
-    const photoName = document.querySelector('#photo_add_name').value;
-    const photoUrl = document.querySelector('#photo_add_url').value;
-    if (photoName != null && photoUrl != null) {
+    event.preventDefault();
+    const photoName = addPhotoName.value;
+    const photoUrl = addPhotoUrl.value;
+    if (isNotEmpty(photoName) && isNotEmpty(photoUrl)) {
         fillPhotoGrid([
             {
-                name: photoName, 
+                name: photoName,
                 link: photoUrl
             }
         ]);
         addPhotoFormElement.reset();
     }
-    closeAddPhoto();
+    closePopup(event);
 }
 
-function openImagePopup(event) {
-    const imageClicked = event.target;
-    const popupImage = imagePopup.querySelector('.image-popup__image');
-    popupImage.src = imageClicked.src;
-    popupImage.alt = imageClicked.alt;
-    imagePopup.querySelector('.image-popup__text').textContent = imageClicked.alt.split(' ')[1];
-    imagePopup.classList.remove('popup_state_closed');
-    imagePopup.classList.add('popup_state_opened');
+function isNotEmpty (string) {
+    return string != undefined && string != null && string.length > 0;
 }
 
-function closeImagePopup(){
-    imagePopup.classList.remove('popup_state_opened');
-    imagePopup.classList.add('popup_state_closed');
+function openImagePopup(card) {
+    imagePopupImage.src = card.link;
+    imagePopupImage.alt = "Фото: " + card.name;
+    imagePopupText.textContent = card.name;
+    openPopup(imagePopup);
 }
 
 fillPhotoGrid(initialCards);
 
-document.querySelector('.button_type_eddit').addEventListener('click', openPopup);
+document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
 document.querySelector('.button_type_close').addEventListener('click', closePopup);
 document.querySelector('#profile-form').addEventListener('submit', formSubmitHandler);
 
 document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
-document.querySelector('#photo_add_close').addEventListener('click', closeAddPhoto);
+document.querySelector('#photo_add_close').addEventListener('click', closePopup);
 addPhotoFormElement.addEventListener('submit', addElement);
 
-document.querySelector('#image-popup_close').addEventListener('click', closeImagePopup);
+document.querySelector('#image-popup_close').addEventListener('click', closePopup);
