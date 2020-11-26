@@ -1,13 +1,13 @@
 const profilePopup = document.querySelector('#profile-popup');
 const profileFieldName = document.querySelector('.profile__heading');
 const profileFieldInfo = document.querySelector('.profile__description');
-const popupFieldName = document.querySelector('#popup_field_name');
-const popupFieldInfo = document.querySelector('#popup_field_info');
+const popupFieldName = document.querySelector('#profile-form-name');
+const popupFieldInfo = document.querySelector('#profile-form-info');
 
 const addPhotoPopup = document.querySelector('#photo_add');
-const addPhotoFormElement = document.querySelector('#photo_add_form');
-const addPhotoName = document.querySelector('#photo_add_name');
-const addPhotoUrl = document.querySelector('#photo_add_url');
+const addPhotoFormElement = document.querySelector('#photo-form');
+const addPhotoName = document.querySelector('#photo-form-name');
+const addPhotoUrl = document.querySelector('#photo-form-url');
 
 const imagePopup = document.querySelector('#image-popup');
 const imagePopupImage = imagePopup.querySelector('.image-popup__image');
@@ -94,6 +94,8 @@ function deleteElement(event) {
 
 function openAddPhoto() {
     addPhotoFormElement.reset();
+    const submitButton = addPhotoFormElement.querySelector(validationConfig.submitButtonSelector)
+    setButtonState(submitButton, false, validationConfig)
     openPopup(addPhotoPopup);
 }
 
@@ -124,13 +126,30 @@ function openImagePopup(card) {
     openPopup(imagePopup);
 }
 
-closeButtons.forEach(button => {
-    button.addEventListener('click', event => closePopup(event.target.closest('.popup')));
-})
+function makeBackgroundsClosable() {
+    const backgrounbs = document.querySelectorAll('.popup');
+    backgrounbs.forEach(background => background.addEventListener('click', evt => closePopup(evt.target)));
 
-document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
-document.querySelector('#profile-form').addEventListener('submit', formSubmitHandler);
-document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
-addPhotoFormElement.addEventListener('submit', addElement);
+    document.addEventListener('keydown', function (evt) { // looks a bit ugly
+        if (evt.key === "Escape") {
+            const openedPopup = document.querySelector('.popup_state_opened');
+            if (openedPopup != null) {
+                closePopup(openedPopup);
+            }
+        }
+    });
+}
 
-fillPhotoGrid(initialCards);
+function initPage() {
+    popupFieldName.value = profileFieldName.textContent;
+    popupFieldInfo.value = profileFieldInfo.textContent;
+    closeButtons.forEach(button => button.addEventListener('click', event => closePopup(event.target.closest('.popup'))));
+    document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
+    document.querySelector('#profile-form').addEventListener('submit', formSubmitHandler);
+    document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
+    addPhotoFormElement.addEventListener('submit', addElement);
+    makeBackgroundsClosable();
+    fillPhotoGrid(initialCards);
+}
+
+initPage();
