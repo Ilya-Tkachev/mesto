@@ -20,12 +20,16 @@ function checkInputValidity(form, input, config) {
 
 function setButtonState(button, isActive, config) {
     if (isActive) {
-        button.classList.remove(config.buttonInvalidClass);
-        button.disabled = false;
+        disableButton(button);
     } else {
         button.classList.add(config.buttonInvalidClass);
         button.disabled = true;
     }
+}
+
+function disableButton(button) {
+    button.classList.remove(config.buttonInvalidClass);
+    button.disabled = false;
 }
 
 function setEventListeners(form, config) {
@@ -47,6 +51,8 @@ function enableValidation(config) {
 
         form.addEventListener('submit', (evt) => {
             evt.preventDefault();
+            const submitButton = form.querySelector(config.submitButtonSelector);
+            disableButton(submitButton);
         });
 
         const submitButton = form.querySelector(config.submitButtonSelector);

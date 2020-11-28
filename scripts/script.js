@@ -65,13 +65,23 @@ function creareCard(card) {
 
 function openPopup(popup) {
     popup.classList.add('popup_state_opened');
+    popup.addEventListener('click', () => closePopup(popup));
+    document.addEventListener('keydown', (evt) => closePopUpOnEscape(evt, popup));
 }
 
-function closePopup(popup) {
+const closePopUpOnEscape = function(evt, popup) {
+    if (evt.key === "Escape") {
+        closePopup(popup);
+    }
+}
+
+const closePopup = function(popup) {
+    popup.removeEventListener('click', closePopup);
+    document.removeEventListener('keydown', closePopUpOnEscape);
     popup.classList.remove('popup_state_opened');
 }
 
-function openProfilePopup(event) {
+function openProfilePopup() {
     popupFieldName.value = profileFieldName.textContent;
     popupFieldInfo.value = profileFieldInfo.textContent;
     openPopup(profilePopup);
@@ -93,9 +103,6 @@ function deleteElement(event) {
 }
 
 function openAddPhoto() {
-    addPhotoFormElement.reset();
-    const submitButton = addPhotoFormElement.querySelector(validationConfig.submitButtonSelector)
-    setButtonState(submitButton, false, validationConfig)
     openPopup(addPhotoPopup);
 }
 
@@ -126,29 +133,11 @@ function openImagePopup(card) {
     openPopup(imagePopup);
 }
 
-function makeBackgroundsClosable() {
-    const backgrounbs = document.querySelectorAll('.popup');
-    backgrounbs.forEach(background => background.addEventListener('click', evt => closePopup(evt.target)));
-
-    document.addEventListener('keydown', function (evt) { // looks a bit ugly
-        if (evt.key === "Escape") {
-            const openedPopup = document.querySelector('.popup_state_opened');
-            if (openedPopup != null) {
-                closePopup(openedPopup);
-            }
-        }
-    });
-}
-
 function initPage() {
-    popupFieldName.value = profileFieldName.textContent;
-    popupFieldInfo.value = profileFieldInfo.textContent;
-    closeButtons.forEach(button => button.addEventListener('click', event => closePopup(event.target.closest('.popup'))));
     document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
     document.querySelector('#profile-form').addEventListener('submit', formSubmitHandler);
     document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
     addPhotoFormElement.addEventListener('submit', addElement);
-    makeBackgroundsClosable();
     fillPhotoGrid(initialCards);
 }
 
