@@ -63,32 +63,34 @@ function creareCard(card) {
     return gridElement;
 }
 
-function openPopup(popup) {
-    popup.classList.add('popup_state_opened');
-    popup.addEventListener('click', () => closePopup(popup));
-    document.addEventListener('keydown', (evt) => closePopUpOnEscape(evt, popup));
-}
-
-const closePopUpOnEscape = function(evt, popup) {
+const closePopUpOnEscape = function (evt, popup) {
     if (evt.key === "Escape") {
         closePopup(popup);
     }
 }
 
-const closePopup = function(popup) {
-    popup.removeEventListener('click', closePopup);
-    document.removeEventListener('keydown', closePopUpOnEscape);
+const closePopup = function (popup) {
     popup.classList.remove('popup_state_opened');
+    document.removeEventListener('keydown', closePopUpOnEscape);
 }
 
-function openProfilePopup() {
+function openPopup(popup) {
+    popup.classList.add('popup_state_opened');
+    document.addEventListener('keydown', (evt) => closePopUpOnEscape(evt, popup));
+}
+
+function makeBackgroundsClosable() { 
+    const backgrounbs = document.querySelectorAll('.popup'); 
+    backgrounbs.forEach(background => background.addEventListener('click', (evt) => closePopup(evt.target))); 
+}
+
+const openProfilePopup = () => {
     popupFieldName.value = profileFieldName.textContent;
     popupFieldInfo.value = profileFieldInfo.textContent;
     openPopup(profilePopup);
 }
 
-function formSubmitHandler(event) {
-    event.preventDefault();
+function formSubmitHandler() {
     profileFieldName.textContent = popupFieldName.value;
     profileFieldInfo.textContent = popupFieldInfo.value;
     closePopup(profilePopup);
@@ -102,28 +104,18 @@ function deleteElement(event) {
     event.target.parentElement.remove();
 }
 
-function openAddPhoto() {
-    openPopup(addPhotoPopup);
-}
+const openAddPhoto = () => openPopup(addPhotoPopup);
 
-function addElement(event) {
-    event.preventDefault();
+function addElement() {
     const photoName = addPhotoName.value;
     const photoUrl = addPhotoUrl.value;
-    if (isNotEmpty(photoName) && isNotEmpty(photoUrl)) {
-        fillPhotoGrid([
-            {
-                name: photoName,
-                link: photoUrl
-            }
-        ]);
-        addPhotoFormElement.reset();
-    }
+    fillPhotoGrid([
+        {
+            name: photoName,
+            link: photoUrl
+        }
+    ]);
     closePopup(addPhotoPopup);
-}
-
-function isNotEmpty(string) {
-    return string != undefined && string != null && string.length > 0;
 }
 
 function openImagePopup(card) {
@@ -134,10 +126,12 @@ function openImagePopup(card) {
 }
 
 function initPage() {
+    closeButtons.forEach(button => button.addEventListener('click', event => closePopup(event.target.closest('.popup')))); 
     document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
     document.querySelector('#profile-form').addEventListener('submit', formSubmitHandler);
     document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
     addPhotoFormElement.addEventListener('submit', addElement);
+    makeBackgroundsClosable();
     fillPhotoGrid(initialCards);
 }
 

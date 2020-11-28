@@ -20,21 +20,27 @@ function checkInputValidity(form, input, config) {
 
 function setButtonState(button, isActive, config) {
     if (isActive) {
-        disableButton(button);
+        button.classList.remove(config.buttonInvalidClass);
+        button.disabled = false;
     } else {
         button.classList.add(config.buttonInvalidClass);
         button.disabled = true;
     }
 }
 
-function disableButton(button) {
-    button.classList.remove(config.buttonInvalidClass);
-    button.disabled = false;
-}
+const isPhotoForm = (form, config) => form.id === config.photoFormClass;
 
 function setEventListeners(form, config) {
     const inputsList = form.querySelectorAll(config.inputSelector);
     const submitButton = form.querySelector(config.submitButtonSelector);
+
+    form.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        if (isPhotoForm(form, config)) {
+            form.reset();
+            setButtonState(submitButton, form.checkValidity(), config);
+        }
+    });
 
     inputsList.forEach((input) => {
         input.addEventListener('input', () => {
@@ -44,19 +50,20 @@ function setEventListeners(form, config) {
     });
 }
 
+function initialButtonSet(form, config) {
+    const submitButton = form.querySelector(config.submitButtonSelector);
+    if (isPhotoForm(form, config)) {
+        setButtonState(submitButton, false, config)
+    } else {
+        setButtonState(submitButton, true, config)
+    }
+}
+
 function enableValidation(config) {
     const forms = document.querySelectorAll(config.formSelector);
     forms.forEach((form) => {
         setEventListeners(form, config);
-
-        form.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-            const submitButton = form.querySelector(config.submitButtonSelector);
-            disableButton(submitButton);
-        });
-
-        const submitButton = form.querySelector(config.submitButtonSelector);
-        setButtonState(submitButton, form.checkValidity(), config)
+        initialButtonSet(form, config);
     });
 }
 
@@ -66,6 +73,7 @@ const validationConfig = {
     submitButtonSelector: '.button_type_save',
     inputInvalidClass: 'form__input_type_error',
     buttonInvalidClass: 'button__inactive',
+    photoFormClass: 'photo-form'
 };
 
 enableValidation(validationConfig);
