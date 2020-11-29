@@ -115,6 +115,7 @@ function addElement() {
             link: photoUrl
         }
     ]);
+    form.reset();
     closePopup(addPhotoPopup);
 }
 
