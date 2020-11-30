@@ -90,7 +90,7 @@ const openProfilePopup = () => {
     openPopup(profilePopup);
 }
 
-function formSubmitHandler() {
+function formSubmitHandler(event) {
     event.preventDefault()
     profileFieldName.textContent = popupFieldName.value;
     profileFieldInfo.textContent = popupFieldInfo.value;
@@ -107,7 +107,7 @@ function deleteElement(event) {
 
 const openAddPhoto = () => openPopup(addPhotoPopup);
 
-function addElement() {
+function addElement(event) {
     event.preventDefault()
     const photoName = addPhotoName.value;
     const photoUrl = addPhotoUrl.value;
@@ -131,9 +131,9 @@ function openImagePopup(card) {
 function initPage() {
     closeButtons.forEach(button => button.addEventListener('click', event => closePopup(event.target.closest('.popup')))); 
     document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
-    document.querySelector('#profile-form').addEventListener('submit', formSubmitHandler);
+    document.querySelector('#profile-form').addEventListener('submit', event => formSubmitHandler(event));
     document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
-    addPhotoFormElement.addEventListener('submit', addElement);
+    addPhotoFormElement.addEventListener('submit', event => addElement(event));
     makeBackgroundsClosable();
     fillPhotoGrid(initialCards);
 }
