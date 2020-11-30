@@ -91,6 +91,7 @@ const openProfilePopup = () => {
 }
 
 function formSubmitHandler() {
+    event.preventDefault()
     profileFieldName.textContent = popupFieldName.value;
     profileFieldInfo.textContent = popupFieldInfo.value;
     closePopup(profilePopup);
@@ -107,6 +108,7 @@ function deleteElement(event) {
 const openAddPhoto = () => openPopup(addPhotoPopup);
 
 function addElement() {
+    event.preventDefault()
     const photoName = addPhotoName.value;
     const photoUrl = addPhotoUrl.value;
     fillPhotoGrid([
@@ -115,7 +117,7 @@ function addElement() {
             link: photoUrl
         }
     ]);
-    form.reset();
+    addPhotoFormElement.reset();
     closePopup(addPhotoPopup);
 }
 
