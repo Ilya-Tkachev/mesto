@@ -1,3 +1,6 @@
+import Card from './Card.js';
+import initValidation from './FormValidator.js';
+
 const profilePopup = document.querySelector('#profile-popup');
 const profileFieldName = document.querySelector('.profile__heading');
 const profileFieldInfo = document.querySelector('.profile__description');
@@ -8,13 +11,6 @@ const addPhotoPopup = document.querySelector('#photo_add');
 const addPhotoFormElement = document.querySelector('#photo-form');
 const addPhotoName = document.querySelector('#photo-form-name');
 const addPhotoUrl = document.querySelector('#photo-form-url');
-
-const imagePopup = document.querySelector('#image-popup');
-const imagePopupImage = imagePopup.querySelector('.image-popup__image');
-const imagePopupText = imagePopup.querySelector('.image-popup__text');
-const elements = document.querySelector('.elements');
-
-const closeButtons = document.querySelectorAll('.button_type_close')
 
 const initialCards = [
     {
@@ -43,45 +39,35 @@ const initialCards = [
     }
 ];
 
-function fillPhotoGrid(cards) {
-    cards.forEach(card => {
-        const gridElement = creareCard(card);
-        elements.prepend(gridElement);
+function fillPhotoGrid(elementsToAdd) {
+    const elements = document.querySelector('.elements');
+    elementsToAdd.forEach(elementToAdd => {
+        const card = new Card(elementToAdd, '#element_template');
+        const cardElement = card.generateCard();
+        elements.prepend(cardElement);
     });
 }
 
-function creareCard(card) {
-    const gridElement = document.querySelector('#element_template').content.cloneNode(true);
-    const photo = gridElement.querySelector('.element__photo');
-    photo.src = card.link;
-    photo.alt = "Фото: " + card.name;
-    const gridBottom = gridElement.querySelector('.element__bottom');
-    gridBottom.querySelector('.element__title').textContent = card.name;
-    gridElement.querySelector('.button_type_delete').addEventListener('click', deleteElement);
-    gridBottom.querySelector('.button_type_like').addEventListener('click', likeElement);
-    photo.addEventListener('click', () => openImagePopup(card));
-    return gridElement;
-}
-
-const closePopUpOnEscape = function (evt, popup) {
-    if (evt.key === "Escape") {
-        closePopup(popup);
-    }
-}
-
-const closePopup = function (popup) {
-    popup.classList.remove('popup_state_opened');
+const closePopup = function (event, popup) {
+    const popupToClose = popup || event.target.closest('.popup');
+    popupToClose.classList.remove('popup_state_opened');
     document.removeEventListener('keydown', closePopUpOnEscape);
+    popupToClose.querySelector('.button_type_close').removeEventListener('click', closePopup);
+    popupToClose.removeEventListener('click', closePopup);
+}
+
+const closePopUpOnEscape = function (event) {
+    if (event.key === "Escape") {
+        const popup = document.querySelector('.popup_state_opened');
+        closePopup(event, popup);
+    }
 }
 
 function openPopup(popup) {
     popup.classList.add('popup_state_opened');
-    document.addEventListener('keydown', (evt) => closePopUpOnEscape(evt, popup));
-}
-
-function makeBackgroundsClosable() { 
-    const backgrounbs = document.querySelectorAll('.popup'); 
-    backgrounbs.forEach(background => background.addEventListener('click', (evt) => closePopup(evt.target))); 
+    document.addEventListener('keydown', closePopUpOnEscape);
+    popup.querySelector('.button_type_close').addEventListener('click', closePopup);
+    popup.addEventListener('click', closePopup);
 }
 
 const openProfilePopup = () => {
@@ -90,22 +76,14 @@ const openProfilePopup = () => {
     openPopup(profilePopup);
 }
 
+const openAddPhoto = () => openPopup(addPhotoPopup);
+
 function formSubmitHandler(event) {
     event.preventDefault()
     profileFieldName.textContent = popupFieldName.value;
     profileFieldInfo.textContent = popupFieldInfo.value;
-    closePopup(profilePopup);
+    closePopup(event, profilePopup);
 }
-
-function likeElement(event) {
-    event.target.classList.toggle('button_type_like-pressed');
-}
-
-function deleteElement(event) {
-    event.target.parentElement.remove();
-}
-
-const openAddPhoto = () => openPopup(addPhotoPopup);
 
 function addElement(event) {
     event.preventDefault()
@@ -118,24 +96,16 @@ function addElement(event) {
         }
     ]);
     addPhotoFormElement.reset();
-    closePopup(addPhotoPopup);
-}
-
-function openImagePopup(card) {
-    imagePopupImage.src = card.link;
-    imagePopupImage.alt = "Фото: " + card.name;
-    imagePopupText.textContent = card.name;
-    openPopup(imagePopup);
+    closePopup(event, addPhotoPopup);
 }
 
 function initPage() {
-    closeButtons.forEach(button => button.addEventListener('click', event => closePopup(event.target.closest('.popup')))); 
     document.querySelector('.button_type_eddit').addEventListener('click', openProfilePopup);
     document.querySelector('#profile-form').addEventListener('submit', event => formSubmitHandler(event));
     document.querySelector('.button_type_add').addEventListener('click', openAddPhoto);
     addPhotoFormElement.addEventListener('submit', event => addElement(event));
-    makeBackgroundsClosable();
     fillPhotoGrid(initialCards);
+    initValidation();
 }
 
 initPage();
