@@ -14,7 +14,7 @@ class FormValidator {
         this._submitButtonSelector = selectors.submitButtonSelector;
         this._inputInvalidClass = selectors.inputInvalidClass;
         this._buttonInvalidClass = selectors.buttonInvalidClass;
-        this.__photoFormClass = selectors.photoFormClass;
+        this._photoFormClass = selectors.photoFormClass;
         this._form = form;
     }
 

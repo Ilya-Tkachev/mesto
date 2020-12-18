@@ -1,4 +1,3 @@
-const elements = document.querySelector('.elements');
 const imagePopup = document.querySelector('#image-popup');
 const imagePopupClose = imagePopup.querySelector('#image-popup_close');
 
@@ -7,7 +6,6 @@ export default class Card {
         this._url = data.link;
         this._name = data.name;
         this._selector = selector;
-        this._liked = false;
     }
 
     _getTemplate() {
@@ -18,14 +16,38 @@ export default class Card {
             .cloneNode(true);
     }
 
-    _handleDelete(event) {
-        event.target.parentElement.remove();
-        //elements.remove(event.target);
+    _handleDelete() {
+        this._element.remove();
+        this._element = null;
     }
 
-    _handleLike(event) {
-        event.target.classList.toggle('button_type_like-pressed');
-        //this._element.like.classList.toggle('button_type_like-pressed');
+    _handleLike() {
+        this._element.querySelector('.button_type_like').classList.toggle('button_type_like-pressed');
+    }
+
+    _handleClose() {
+        imagePopup.classList.remove('popup_state_opened');
+        document.removeEventListener('keydown', this._handleCloseOnEscape);
+        imagePopupClose.removeEventListener('click', this._handleClose);
+        imagePopup.removeEventListener('click', this._handleCloseOnOverlay);
+    }
+
+    _handleCloseOnEscape(event) {
+        if (event.key === "Escape") {
+            imagePopup.classList.remove('popup_state_opened');
+            document.removeEventListener('keydown', this._handleCloseOnEscape);
+            imagePopupClose.removeEventListener('click', this._handleClose);
+            imagePopup.removeEventListener('click', this._handleCloseOnOverlay);
+        }
+    }
+
+    _handleCloseOnOverlay(event) {
+        if (event.target.classList.contains('popup')) {
+            imagePopup.classList.remove('popup_state_opened');
+            document.removeEventListener('keydown', this._handleCloseOnEscape);
+            imagePopupClose.removeEventListener('click', this._handleClose);
+            imagePopup.removeEventListener('click', this._handleCloseOnOverlay);
+        }
     }
 
     _handleOpen() {
@@ -37,42 +59,23 @@ export default class Card {
         imagePopupText.textContent = this._name;
 
         imagePopup.classList.add('popup_state_opened');
-    }
 
-    _handleClose() {
-        imagePopup.classList.remove('popup_state_opened');
-    }
-
-    _handleCloseOnEscape(event) {
-        if (event.key === "Escape") {
-            _handleClose();
-        }
+        imagePopupClose.addEventListener('click', this._handleClose);
+        document.addEventListener('keydown', this._handleCloseOnEscape);
+        imagePopup.addEventListener('click', this._handleCloseOnOverlay);
     }
 
     _setEventListeners() {
-        this._element.querySelector('.button_type_delete').addEventListener('click', (event) => {
-            console.log('delete');
-            this._handleDelete(event);
+        this._element.querySelector('.button_type_delete').addEventListener('click', () => {
+            this._handleDelete();
         });
 
-        this._element.querySelector('.button_type_like').addEventListener('click', (event) => {
-            console.log('like');
-            this._handleLike(event);
+        this._element.querySelector('.button_type_like').addEventListener('click', () => {
+            this._handleLike();
         });
 
         this._element.querySelector('.element__photo').addEventListener('click', () => {
-            console.log('opne');
             this._handleOpen();
-        });
-
-        imagePopupClose.addEventListener('click', () => {
-            console.log('close');
-            this._handleClose();
-        });
-
-        this._element.addEventListener('click', (event) => {
-            console.log('closeOnEscape');
-            this._handleCloseOnEscape(event);
         });
     }
 

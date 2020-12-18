@@ -53,7 +53,10 @@ const closePopup = function (event, popup) {
     popupToClose.classList.remove('popup_state_opened');
     document.removeEventListener('keydown', closePopUpOnEscape);
     popupToClose.querySelector('.button_type_close').removeEventListener('click', closePopup);
-    popupToClose.removeEventListener('click', closePopup);
+    popupToClose.removeEventListener('click', closePopUpOnOverlay);
+    if (popupToClose == addPhotoPopup) {
+        addPhotoFormElement.reset();
+    }
 }
 
 const closePopUpOnEscape = function (event) {
@@ -63,11 +66,15 @@ const closePopUpOnEscape = function (event) {
     }
 }
 
+const closePopUpOnOverlay = function (event) {
+    if (event.target.classList.contains('popup')) closePopup(undefined, event.target.closest('.popup'));
+}
+
 function openPopup(popup) {
     popup.classList.add('popup_state_opened');
     document.addEventListener('keydown', closePopUpOnEscape);
     popup.querySelector('.button_type_close').addEventListener('click', closePopup);
-    popup.addEventListener('click', closePopup);
+    popup.addEventListener('click', closePopUpOnOverlay);
 }
 
 const openProfilePopup = () => {
