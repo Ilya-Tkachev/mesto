@@ -54,9 +54,6 @@ const closePopup = function (event, popup) {
     document.removeEventListener('keydown', closePopUpOnEscape);
     popupToClose.querySelector('.button_type_close').removeEventListener('click', closePopup);
     popupToClose.removeEventListener('click', closePopUpOnOverlay);
-    if (popupToClose == addPhotoPopup) {
-        addPhotoFormElement.reset();
-    }
 }
 
 const closePopUpOnEscape = function (event) {
