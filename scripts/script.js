@@ -1,7 +1,9 @@
 import Card from './Card.js';
 import initValidation from './FormValidator.js';
+import { initialCards } from './initial-сards.js';
 
 const profilePopup = document.querySelector('#profile-popup');
+const profileForm = document.querySelector('#profile-form');
 const profileFieldName = document.querySelector('.profile__heading');
 const profileFieldInfo = document.querySelector('.profile__description');
 const popupFieldName = document.querySelector('#profile-form-name');
@@ -12,32 +14,6 @@ const addPhotoFormElement = document.querySelector('#photo-form');
 const addPhotoName = document.querySelector('#photo-form-name');
 const addPhotoUrl = document.querySelector('#photo-form-url');
 
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
 
 function fillPhotoGrid(elementsToAdd) {
     const elements = document.querySelector('.elements');
@@ -48,45 +24,59 @@ function fillPhotoGrid(elementsToAdd) {
     });
 }
 
-const closePopup = function (event, popup) {
-    const popupToClose = popup || event.target.closest('.popup');
+const closePopup = function (popupToClose) {
     popupToClose.classList.remove('popup_state_opened');
     document.removeEventListener('keydown', closePopUpOnEscape);
-    popupToClose.querySelector('.button_type_close').removeEventListener('click', closePopup);
+    popupToClose.querySelector('.button_type_close').removeEventListener('click', closePopUpOnCloseButton);
     popupToClose.removeEventListener('click', closePopUpOnOverlay);
 }
 
 const closePopUpOnEscape = function (event) {
-    if (event.key === "Escape") {
-        const popup = document.querySelector('.popup_state_opened');
-        closePopup(event, popup);
-    }
+    if (event.key === "Escape") closePopup(document.querySelector('.popup_state_opened'));
 }
 
 const closePopUpOnOverlay = function (event) {
-    if (event.target.classList.contains('popup')) closePopup(undefined, event.target.closest('.popup'));
+    if (event.target.classList.contains('popup')) closePopup(event.target.closest('.popup'));
+}
+
+const closePopUpOnCloseButton = function (event) {
+    closePopup(event.target.closest('.popup'));
 }
 
 function openPopup(popup) {
     popup.classList.add('popup_state_opened');
     document.addEventListener('keydown', closePopUpOnEscape);
-    popup.querySelector('.button_type_close').addEventListener('click', closePopup);
+    popup.querySelector('.button_type_close').addEventListener('click', closePopUpOnCloseButton);
     popup.addEventListener('click', closePopUpOnOverlay);
 }
 
 const openProfilePopup = () => {
+    resetForm(profileForm);
     popupFieldName.value = profileFieldName.textContent;
     popupFieldInfo.value = profileFieldInfo.textContent;
     openPopup(profilePopup);
 }
 
-const openAddPhoto = () => openPopup(addPhotoPopup);
+function resetForm(form) {
+    form.reset();
+    form.querySelectorAll('.popup__input').forEach(input => {
+        input.classList.remove('form__input_type_error');
+    })
+    form.querySelectorAll('.form__input-error').forEach(error => {
+        error.textContent = "";
+    });
+}
+
+const openAddPhoto = () => {
+    resetForm(addPhotoFormElement);
+    openPopup(addPhotoPopup);
+};
 
 function formSubmitHandler(event) {
     event.preventDefault()
     profileFieldName.textContent = popupFieldName.value;
     profileFieldInfo.textContent = popupFieldInfo.value;
-    closePopup(event, profilePopup);
+    closePopup(profilePopup);
 }
 
 function addElement(event) {
@@ -100,7 +90,7 @@ function addElement(event) {
         }
     ]);
     addPhotoFormElement.reset();
-    closePopup(event, addPhotoPopup);
+    closePopup(addPhotoPopup);
 }
 
 function initPage() {
