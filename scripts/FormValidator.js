@@ -1,3 +1,6 @@
+const editProfileForm = document.querySelector('#profile-form');
+const addCardForm = document.querySelector('#photo-form');
+
 const validationConfig = {
     formSelector: '.form',
     inputSelector: '.popup__input',
@@ -86,23 +89,10 @@ class FormValidator {
     }
 }
 
-export default function initValidation() {
-    /* 
-    Для каждого попапа с формой следует создать свой валидатор с уникальным именем. 
-    Включение валидации, соответсвенно, также происходит по отдельности для каждого попапа.
+export default function initValidation() {    
+    const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm, 'editProfileFormValidator');
+    editProfileFormValidator.enableValidation();
 
-    Не понимаю замечание, ведь у меня реализовано именно то, что вы требуете.
-    allForms содержи в себе 2 элемента, форму из попапа редактирования профиля и форму из попапа добавления картинок
-    в цикле с начала для первой формы из попапа редактирования профиля создаем валидатор, и включаем валидацию
-    потом для второй формы из попапа добавления картинок включаем создаем валидатор, и включаем валидацию
-    Может вас смутило имя переменной form? form это не сам инпут, это 2 инпута + кнопка сабмита.
-    Валидация не целиком на попапе, а на форме попапа.
-    */
-    let counter = 0;
-    const allForms = document.querySelectorAll(validationConfig.formSelector);
-    allForms.forEach(form => {
-        const formValidator = new FormValidator(validationConfig, form, `Name${counter}`);
-        formValidator.enableValidation();
-        ++counter;
-    });
+    const addCardFormValidator = new FormValidator(validationConfig, addCardForm, 'addCardFormValidator');
+    addCardFormValidator.enableValidation();
 }
