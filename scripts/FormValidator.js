@@ -1,18 +1,5 @@
-const editProfileForm = document.querySelector('#profile-form');
-const addCardForm = document.querySelector('#photo-form');
-
-const validationConfig = {
-    formSelector: '.form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.button_type_save',
-    inputInvalidClass: 'form__input_type_error',
-    buttonInvalidClass: 'button__inactive',
-    photoFormClass: 'photo-form'
-};
-
-class FormValidator {
-    constructor(selectors, form, name) {
-        this._name = name;
+export default class FormValidator {
+    constructor(selectors, form) {
         this._formSelector = selectors.formSelector;
         this._inputSelector = selectors.inputSelector;
         this._submitButtonSelector = selectors.submitButtonSelector;
@@ -87,12 +74,4 @@ class FormValidator {
         });
         this._initialButtonSet(this._form);
     }
-}
-
-export default function initValidation() {    
-    const editProfileFormValidator = new FormValidator(validationConfig, editProfileForm, 'editProfileFormValidator');
-    editProfileFormValidator.enableValidation();
-
-    const addCardFormValidator = new FormValidator(validationConfig, addCardForm, 'addCardFormValidator');
-    addCardFormValidator.enableValidation();
 }

@@ -1,5 +1,5 @@
 import Card from './Card.js';
-import initValidation from './FormValidator.js';
+import FormValidator from './FormValidator.js';
 import { initialCards } from './initial-сards.js';
 
 const profilePopup = document.querySelector('#profile-popup');
@@ -14,14 +14,24 @@ const addPhotoFormElement = document.querySelector('#photo-form');
 const addPhotoName = document.querySelector('#photo-form-name');
 const addPhotoUrl = document.querySelector('#photo-form-url');
 
+const elements = document.querySelector('.elements');
+
+const validationConfig = {
+    formSelector: '.form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.button_type_save',
+    inputInvalidClass: 'form__input_type_error',
+    buttonInvalidClass: 'button__inactive',
+    photoFormClass: 'photo-form'
+};
+
+function createCard(elementToAdd) {
+    const card = new Card(elementToAdd, '#element_template');
+    return card.generateCard();
+}
 
 function fillPhotoGrid(elementsToAdd) {
-    const elements = document.querySelector('.elements');
-    elementsToAdd.forEach(elementToAdd => {
-        const card = new Card(elementToAdd, '#element_template');
-        const cardElement = card.generateCard();
-        elements.prepend(cardElement);
-    });
+    elementsToAdd.forEach(elementToAdd => elements.prepend(createCard(elementToAdd)));
 }
 
 const closePopup = function (popupToClose) {
@@ -91,6 +101,14 @@ function addElement(event) {
     ]);
     addPhotoFormElement.reset();
     closePopup(addPhotoPopup);
+}
+
+function initValidation() {
+    const editProfileFormValidator = new FormValidator(validationConfig, profileForm);
+    editProfileFormValidator.enableValidation();
+
+    const addCardFormValidator = new FormValidator(validationConfig, addPhotoFormElement);
+    addCardFormValidator.enableValidation();
 }
 
 function initPage() {
