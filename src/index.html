@@ -7,32 +7,29 @@
     <meta name="description" content="Работа курса frontend" />
     <meta name="keywords" content="Яндекс Практикум frontend" />
     <meta name="author" content="Илья Ткачев" />
-
-    <link rel="stylesheet" href="./pages/index.css" />
-
     <title>Mesto</title>
 </head>
 
 <body class="body">
     <div class="page">
         <header class="header">
-            <img class="header__logo" src="./images/logo.svg" alt="Изображение Лого">
+            <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Изображение Лого">
         </header>
 
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="./images/kysto.png" alt="Фото Кусто">
+                <img class="profile__avatar" src="<%=require('./images/kysto.png')%>" alt="Фото Кусто">
                 <div class="profile__info">
                     <div class="profile__text">
                         <h1 class="profile__heading text-overflow">Жак-Ив Кусто</h1>
                         <p class="profile__description text-overflow">Исследователь океана</p>
                     </div>
                     <button class="button button_type_eddit object-hower" type="button">
-                        <img src="./images/edit.svg" alt="кнопка редактирования">
+                        <img src="<%=require('./images/edit.svg')%>" alt="кнопка редактирования">
                     </button>
                 </div>
                 <button class="button button_type_add object-hower" type="button">
-                    <img src="./images/add.svg" alt="кнопка добавления">
+                    <img src="<%=require('./images/add.svg')%>" alt="кнопка добавления">
                 </button>
             </section>
             <div id="profile-popup" class="popup">
@@ -64,7 +61,7 @@
             <div id="image-popup" class="popup image-popup">
                 <div class="image-popup__container">
                     <button id="image-popup_close" class="button button_type_close object-hower" type="button"></button>
-                    <img class="image-popup__image" alt="..." src="./images/logo.svg" />
+                    <img class="image-popup__image" alt="..." src="<%=require('./images/logo.svg')%>" />
                     <!-- src is set to such value to pass code validation -->
                     <p class="image-popup__text"></p>
                 </div>
@@ -78,7 +75,7 @@
     </div>
     <template id="element_template">
         <div class="element">
-            <img class="element__photo" alt="..." src="./images/logo.svg" />
+            <img class="element__photo" alt="..." src="<%=require('./images/logo.svg')%>" />
             <!-- src is set to such value to pass code validation -->
             <button class="button button_type_delete object-hower" type="button"></button>
             <div class="element__bottom">
@@ -89,7 +86,6 @@
             </div>
         </div>
     </template>
-    <script type="module" src="./scripts/script.js"></script>
 </body>
 
 </html>

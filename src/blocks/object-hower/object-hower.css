@@ -1,5 +1,5 @@
 .object-hower {
-    opacity: 100%;
+    opacity: 1;
     transition: opacity .5s ease-out;
  }
 
