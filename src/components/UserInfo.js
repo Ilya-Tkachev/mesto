@@ -1,18 +1,18 @@
 export default class UserInfo {
     constructor(profileFieldName, profileFieldInfo) {
-        this._nameSelector = profileFieldName;
-        this._infoSelector = profileFieldInfo;
+        this._nameField = document.querySelector(profileFieldName);
+        this._infoSelector = document.querySelector(profileFieldInfo);
     }
 
     getUserInfo() {
         return {
-            name: document.querySelector(this._nameSelector).textContent,
-            info: document.querySelector(this._infoSelector).textContent
+            name: this._nameField.textContent,
+            info: this._infoSelector.textContent
         }
     }
 
     setUserInfo(name, info) {
-        document.querySelector(this._nameSelector).textContent = name;
-        document.querySelector(this._infoSelector).textContent = info;
+        this._nameField.textContent = name;
+        this._infoSelector.textContent = info;
     }
 }

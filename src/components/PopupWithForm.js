@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
         this._userInfo = userInfo;
         this._submitButton = this._popup.querySelector('.button_type_save');
         this._inputs = this._popup.querySelectorAll('.popup__input');
+        this._popupForm = this._popup.querySelector('.form');
     }
 
     _getInputValues() {
@@ -21,11 +22,11 @@ export default class PopupWithForm extends Popup {
     }
 
     open() {
-        this._resetForm(this._popup.querySelector('.form'));
+        this._resetForm(this._popupForm);
         if (this._isProfilePopup()) {
-            const info = this._userInfo.getUserInfo();
-            this._inputs[0].value = info.name;
-            this._inputs[1].value = info.info;
+            const userInfo = this._userInfo();
+            this._inputs[0].value = userInfo.name;
+            this._inputs[1].value = userInfo.info;
         }
         super.open();
     }

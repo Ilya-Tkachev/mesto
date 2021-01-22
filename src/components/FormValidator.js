@@ -1,11 +1,10 @@
 export default class FormValidator {
     constructor(selectors, form) {
-        this._formSelector = selectors.formSelector;
         this._inputSelector = selectors.inputSelector;
-        this._submitButtonSelector = selectors.submitButtonSelector;
         this._inputInvalidClass = selectors.inputInvalidClass;
         this._buttonInvalidClass = selectors.buttonInvalidClass;
         this._photoFormClass = selectors.photoFormClass;
+        this._submitButton = form.querySelector(selectors.submitButtonSelector);
         this._form = form;
     }
 
@@ -41,11 +40,10 @@ export default class FormValidator {
 
     _setEventListeners(form) {
         const inputs = form.querySelectorAll(this._inputSelector);
-        const submitButton = form.querySelector(this._submitButtonSelector);
         inputs.forEach((input) => {
             input.addEventListener('input', () => {
                 this._isValid(input);
-                this._setButtonState(submitButton, this._form.checkValidity());
+                this._setButtonState(this._submitButton, this._form.checkValidity());
             });
         });
     }
@@ -54,24 +52,15 @@ export default class FormValidator {
         return form.id === this._photoFormClass;
     }
 
-    _initialButtonSet(form) {
-        const submitButton = form.querySelector(this._submitButtonSelector);
-        if (this._isPhotoForm(form)) {
-            this._setButtonState(submitButton, false);
+    initialButtonSet() {
+        if (this._isPhotoForm(this._form)) {
+            this._setButtonState(this._submitButton, false);
         } else {
-            this._setButtonState(submitButton, true);
+            this._setButtonState(this._submitButton, true);
         }
     }
 
     enableValidation() {
         this._setEventListeners(this._form);
-        this._form.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-            if (this._isPhotoForm(this._form)) {
-                const submitButton = this._form.querySelector(this._submitButtonSelector);
-                this._setButtonState(submitButton, this._form.checkValidity());
-            }
-        });
-        this._initialButtonSet(this._form);
     }
 }

@@ -36,6 +36,10 @@ function initValidation() {
 
     const addCardFormValidator = new FormValidator(validationConfig, addPhotoFormElement);
     addCardFormValidator.enableValidation();
+    return {
+        editProfileForm: editProfileFormValidator,
+        addCardForm: addCardFormValidator
+    }
 }
 
 function initPage() {
@@ -59,6 +63,7 @@ function initPage() {
         elements
     );
     initSection.rendererAll();
+    const forms = initValidation();
 
     const userInfo = new UserInfo('.profile__heading', '.profile__description');
 
@@ -70,15 +75,17 @@ function initPage() {
                 userInfo.setUserInfo(popupFieldName.value, popupFieldInfo.value);
                 userInfoForm.close();
             },
-            userInfo: userInfo
+            userInfo: () => { return userInfo.getUserInfo(); }
         }
     );
     document.querySelector('.button_type_eddit').addEventListener('click', userInfoForm.open.bind(userInfoForm));
+    document.querySelector('.button_type_eddit').addEventListener('click', forms.editProfileForm.initialButtonSet.bind(forms.editProfileForm));
 
     const photoForm = new PopupWithForm(
         {
             popupSelector: '#photo_add',
-            formSubmit: () => {
+            formSubmit: (event) => {
+                event.preventDefault();
                 const data = { name: addPhotoName.value, link: addPhotoUrl.value };
                 initSection.addItem(data);
                 photoForm.close();
@@ -86,9 +93,7 @@ function initPage() {
         }
     );
     document.querySelector('.button_type_add').addEventListener('click', photoForm.open.bind(photoForm));
-
-    initValidation();
-
+    document.querySelector('.button_type_add').addEventListener('click', forms.addCardForm.initialButtonSet.bind(forms.addCardForm));
 }
 
 initPage();

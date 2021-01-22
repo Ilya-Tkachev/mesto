@@ -7,16 +7,14 @@ export default class PopupWithImage extends Popup {
         super(popupSelector);
         this._url = url;
         this._name = name;
+        this._imagePopupImage = imagePopup.querySelector('.image-popup__image');
+        this._imagePopupText = imagePopup.querySelector('.image-popup__text');
     }
 
     open() {
-        const imagePopupImage = imagePopup.querySelector('.image-popup__image');
-        imagePopupImage.src = this._url;
-        imagePopupImage.alt = "Фото: " + this._name;
-        
-        const imagePopupText = imagePopup.querySelector('.image-popup__text');
-        imagePopupText.textContent = this._name;
-
+        this._imagePopupImage.src = this._url;
+        this._imagePopupImage.alt = "Фото: " + this._name;
+        this._imagePopupText.textContent = this._name;
         super.open();
     }
 
