@@ -19,6 +19,9 @@ const addPhotoFormElement = document.querySelector('#photo-form');
 const addPhotoName = document.querySelector('#photo-form-name');
 const addPhotoUrl = document.querySelector('#photo-form-url');
 
+const addButton = document.querySelector('.button_type_add');
+const edditButton = document.querySelector('.button_type_eddit');
+
 const elements = document.querySelector('.elements');
 
 const validationConfig = {
@@ -78,8 +81,8 @@ function initPage() {
             userInfo: () => { return userInfo.getUserInfo(); }
         }
     );
-    document.querySelector('.button_type_eddit').addEventListener('click', userInfoForm.open.bind(userInfoForm));
-    document.querySelector('.button_type_eddit').addEventListener('click', forms.editProfileForm.initialButtonSet.bind(forms.editProfileForm));
+    edditButton.addEventListener('click', () => { userInfoForm.open(); });
+    edditButton.addEventListener('click', () => { forms.editProfileForm.initialButtonSet(); });
 
     const photoForm = new PopupWithForm(
         {
@@ -92,8 +95,8 @@ function initPage() {
             }
         }
     );
-    document.querySelector('.button_type_add').addEventListener('click', photoForm.open.bind(photoForm));
-    document.querySelector('.button_type_add').addEventListener('click', forms.addCardForm.initialButtonSet.bind(forms.addCardForm));
+    addButton.addEventListener('click', () => { photoForm.open(); });
+    addButton.addEventListener('click', () => { forms.addCardForm.initialButtonSet(); });
 }
 
 initPage();
