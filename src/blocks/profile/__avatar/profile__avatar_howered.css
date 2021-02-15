@@ -1,0 +1,25 @@
+.profile__avatar_howered {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+
+    position: absolute;
+    opacity: 0;
+    transition: opacity .5s ease-out;
+
+    background-image: url('../../../images/pen.svg');
+    background-color: rgba(0, 0, 0, 0.8);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.profile__avatar_howered:hover {
+    opacity: .6;
+}
+
+@media (max-width: 680px) {
+    .profile__avatar_howered {
+        margin-right: 0;
+        margin-bottom: 22.25px;
+    }
+}

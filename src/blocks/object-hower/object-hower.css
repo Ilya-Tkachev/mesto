@@ -3,6 +3,6 @@
     transition: opacity .5s ease-out;
  }
 
- .object-hower:hover {
+.object-hower:hover {
     opacity: .6;
 }

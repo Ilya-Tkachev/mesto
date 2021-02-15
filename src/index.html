@@ -18,11 +18,12 @@
 
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('./images/kysto.png')%>" alt="Фото Кусто">
+                <img class="profile__avatar" src="<%=require('./images/logo.svg')%>" alt="Фото пользователя">
+                <div class="profile__avatar_howered"></div>
                 <div class="profile__info">
                     <div class="profile__text">
-                        <h1 class="profile__heading text-overflow">Жак-Ив Кусто</h1>
-                        <p class="profile__description text-overflow">Исследователь океана</p>
+                        <h1 class="profile__heading text-overflow">...</h1>
+                        <p class="profile__description text-overflow">...</p>
                     </div>
                     <button class="button button_type_eddit object-hower" type="button">
                         <img src="<%=require('./images/edit.svg')%>" alt="кнопка редактирования">
@@ -37,10 +38,24 @@
                     <button class="button button_type_close object-hower" type="button"></button>
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <form id="profile-form" name="profile-form" class="form">
-                        <input id="profile-form-name" class="popup__input" type="text" name="name" required minlength="2" maxlength="40" autocomplete="off" placeholder="Имя">
+                        <input id="profile-form-name" class="popup__input" type="text" name="name" required
+                            minlength="2" maxlength="40" autocomplete="off" placeholder="Имя">
                         <span class="form__input-error" id="profile-form-name-input-error"></span>
-                        <input id="profile-form-info" class="popup__input" type="text" name="info" required minlength="2" maxlength="200" autocomplete="off" placeholder="Вид деятельности">
+                        <input id="profile-form-info" class="popup__input" type="text" name="info" required
+                            minlength="2" maxlength="200" autocomplete="off" placeholder="Вид деятельности">
                         <span class="form__input-error" id="profile-form-info-input-error"></span>
+                        <button class="button button_type_save object-hower" type="submit">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+            <div id="avatar-popup" class="popup">
+                <div class="popup__container">
+                    <button class="button button_type_close object-hower" type="button"></button>
+                    <h2 class="popup__title">Обновить аватар</h2>
+                    <form id="avatar-form" name="avatar-form" class="form">
+                        <input id="avatar-form-url" class="popup__input" type="url" name="avatar_url"
+                            placeholder="Ссылка на картинку" required>
+                        <span class="form__input-error" id="avatar-form-url-input-error"></span>
                         <button class="button button_type_save object-hower" type="submit">Сохранить</button>
                     </form>
                 </div>
@@ -50,11 +65,22 @@
                     <button class="button button_type_close object-hower" type="button"></button>
                     <h2 class="popup__title">Новое место</h2>
                     <form id="photo-form" name="photo-form" class="form">
-                        <input id="photo-form-name" class="popup__input" type="text" name="photo_name" placeholder="Название" required minlength="2" maxlength="30">
+                        <input id="photo-form-name" class="popup__input" type="text" name="photo_name"
+                            placeholder="Название" required minlength="2" maxlength="30">
                         <span class="form__input-error" id="photo-form-name-input-error"></span>
-                        <input id="photo-form-url" class="popup__input" type="url" name="photo_url" placeholder="Ссылка на картинку" required>
+                        <input id="photo-form-url" class="popup__input" type="url" name="photo_url"
+                            placeholder="Ссылка на картинку" required>
                         <span class="form__input-error" id="photo-form-url-input-error"></span>
                         <button class="button button_type_save object-hower" type="submit">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+            <div id="photo_delete" class="popup">
+                <div class="popup__container">
+                    <button class="button button_type_close object-hower" type="button"></button>
+                    <h2 class="popup__title">Вы уверены?</h2>
+                    <form id="photo-form-delete" name="photo-form-delete" class="form">
+                        <button class="button button_type_save object-hower" type="submit">Да</button>
                     </form>
                 </div>
             </div>
@@ -82,7 +108,10 @@
                 <h2 class="element__title text-overflow">
                     <!-- set name here -->
                 </h2>
-                <button class="button button_type_like object-hower" type="button"></button>
+                <div class="element__like">
+                    <button class="button button_type_like object-hower" type="button"></button>
+                    <p class="element___like_title">1</p>
+                </div>
             </div>
         </div>
     </template>

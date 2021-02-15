@@ -1,18 +1,31 @@
 export default class UserInfo {
-    constructor(profileFieldName, profileFieldInfo) {
+    constructor(profileFieldName, profileFieldInfo, profileAvatar) {
         this._nameField = document.querySelector(profileFieldName);
         this._infoSelector = document.querySelector(profileFieldInfo);
+        this._profileAvatar = document.querySelector(profileAvatar);
     }
 
     getUserInfo() {
-        return {
-            name: this._nameField.textContent,
-            info: this._infoSelector.textContent
-        }
+        return this._userInfo;
     }
 
-    setUserInfo(name, info) {
-        this._nameField.textContent = name;
-        this._infoSelector.textContent = info;
+    setUserInfo(data) {
+        if(data) {
+            this._userInfo = data;
+        }
+        this._nameField.textContent = this._userInfo.name;
+        this._infoSelector.textContent = this._userInfo.about;
+    }
+
+    init(data) {
+        this._userInfo = data;
+        this._profileAvatar.src = this._userInfo.avatar;
+        this._profileAvatar.alt = "Фото: " + this._userInfo.name;
+        this.setUserInfo()
+    }
+
+    updateAvatar(avatarUrl) {
+        this._profileAvatar.src = avatarUrl;
+        this._profileAvatar.alt = `Фото: ${avatarUrl}`;
     }
 }

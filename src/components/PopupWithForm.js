@@ -26,7 +26,7 @@ export default class PopupWithForm extends Popup {
         if (this._isProfilePopup()) {
             const userInfo = this._userInfo();
             this._inputs[0].value = userInfo.name;
-            this._inputs[1].value = userInfo.info;
+            this._inputs[1].value = userInfo.about;
         }
         super.open();
     }
@@ -35,12 +35,12 @@ export default class PopupWithForm extends Popup {
 
     _resetForm(form) {
         form.reset();
-        form.querySelectorAll('.popup__input').forEach(input => {
-            input.classList.remove('form__input_type_error');
-        })
-        form.querySelectorAll('.form__input-error').forEach(error => {
-            error.textContent = "";
-        });
+        form.querySelectorAll('.popup__input').forEach(input => input.classList.remove('form__input_type_error'))
+        form.querySelectorAll('.form__input-error').forEach(error => error.textContent = "");
+    }
+
+    changeButtonName(newName) {
+        this._submitButton.textContent = newName;
     }
 
 }

@@ -4,6 +4,7 @@ export default class FormValidator {
         this._inputInvalidClass = selectors.inputInvalidClass;
         this._buttonInvalidClass = selectors.buttonInvalidClass;
         this._photoFormClass = selectors.photoFormClass;
+        this._avatarFormClass = selectors.avatarFormClass;
         this._submitButton = form.querySelector(selectors.submitButtonSelector);
         this._form = form;
     }
@@ -52,8 +53,12 @@ export default class FormValidator {
         return form.id === this._photoFormClass;
     }
 
+    _isAvatarForm(form) {
+        return form.id === this._avatarFormClass;
+    }
+
     initialButtonSet() {
-        if (this._isPhotoForm(this._form)) {
+        if (this._isPhotoForm(this._form) || this._isAvatarForm(this._form)) {
             this._setButtonState(this._submitButton, false);
         } else {
             this._setButtonState(this._submitButton, true);
