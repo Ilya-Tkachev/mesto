@@ -12,7 +12,7 @@
 @import url('../blocks/content/content.css');
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/profile/__avatar/profile__avatar.css');
-@import url('../blocks/profile/__avatar/profile__avatar_howered.css');
+@import url('../blocks/profile/__avatar/_howered/profile__avatar_howered.css');
 @import url('../blocks/profile/__info/profile__info.css');
 @import url('../blocks/profile/__text/profile__text.css');
 @import url('../blocks/profile/__heading/profile__heading.css');
@@ -44,7 +44,7 @@
 @import url('../blocks/element/__photo/element__photo.css');
 @import url('../blocks/element/__bottom/element__bottom.css');
 @import url('../blocks/element/__title/element__title.css');
-@import url('../blocks/element/__like/element___like_title.css');
+@import url('../blocks/element/__like/_title/element___like_title.css');
 @import url('../blocks/element/__like/element__like.css');
 @import url('../blocks/element/__img/element__img.css');
 
