@@ -19,7 +19,7 @@ const addPhotoUrl = document.querySelector('#photo-form-url');
 const avatarForm = document.querySelector('#avatar-form');
 const avatarPhotoUrl = document.querySelector('#avatar-form-url');
 
-const avatarButton = document.querySelector('.profile__avatar_howered');
+const avatarButton = document.querySelector('.profile__avatar-howered');
 
 const addButton = document.querySelector('.button_type_add');
 const edditButton = document.querySelector('.button_type_eddit');
@@ -69,7 +69,12 @@ function initPage() {
 
     const userInfo = new UserInfo('.profile__heading', '.profile__description', '.profile__avatar');
     api.getUserInfo()
-        .then(response => userInfo.init(response));
+        .then(response => userInfo.init(response))
+        .catch(err => console.log(err));
+
+    const imagePopup = new PopupWithImage('#image-popup');
+
+    const confirmationPopup = new PopupConfirm('#photo_delete');
 
     const initSection = new Section(
         {
@@ -78,18 +83,15 @@ function initPage() {
                     {
                         data: elementToAdd,
                         selector: '#element_template',
-                        handleCardClick: () => {
-                            const userInfoForm = new PopupWithImage('#image-popup', elementToAdd.link, elementToAdd.name);
-                            userInfoForm.open();
-                        },
+                        handleCardClick: () => imagePopup.open(elementToAdd.link, elementToAdd.name),
                         handleDelete: () => {
-                            const confirmationPopup = new PopupConfirm({
-                                popupSelector: '#photo_delete',
+                            confirmationPopup.setNewSubmitHandler({
                                 formSubmit: (event) => {
                                     event.preventDefault();
                                     const cardId = card.remove();
                                     api.deleteCard(cardId)
-                                        .then(confirmationPopup.close());
+                                        .then(confirmationPopup.close())
+                                        .catch(err => console.log(err));
                                 }
                             });
                             confirmationPopup.open();
@@ -97,10 +99,12 @@ function initPage() {
                         handleLike: () => {
                             if (card.isLikedByMe(userInfo)) {
                                 api.dislikeCard(card._id)
-                                    .then(result => card.toggleLike(result, userInfo));
+                                    .then(result => card.toggleLike(result, userInfo))
+                                    .catch(err => console.log(err));
                             } else {
                                 api.likeCard(card._id)
-                                    .then(result => card.toggleLike(result, userInfo));
+                                    .then(result => card.toggleLike(result, userInfo))
+                                    .catch(err => console.log(err));
                             }
                         }
                     }
@@ -110,7 +114,9 @@ function initPage() {
         },
         elements
     );
-    api.getCardsData().then(initialCards => initSection.rendererAll(initialCards, userInfo.getUserInfo()));
+    api.getCardsData()
+        .then(initialCards => initSection.rendererAll(initialCards, userInfo.getUserInfo()))
+        .catch(err => console.log(err));
     const forms = initValidation();
 
     const avatarForm = new PopupWithForm(
@@ -122,12 +128,12 @@ function initPage() {
                 api.changeAvatar(avatarPhotoUrl.value)
                     .then(userInfo.updateAvatar(avatarPhotoUrl.value))
                     .then(avatarForm.changeButtonName(save))
-                    .then(avatarForm.close());
+                    .then(avatarForm.close())
+                    .catch(err => console.log(err));
             }
         }
     );
     avatarButton.addEventListener('click', () => { avatarForm.open(); });
-    avatarButton.addEventListener('click', () => { forms.editAvatarForm.initialButtonSet(); });
 
     const userInfoForm = new PopupWithForm(
         {
@@ -138,13 +144,16 @@ function initPage() {
                 api.updateUserInfo(popupFieldName.value, popupFieldInfo.value)
                     .then(response => userInfo.setUserInfo(response))
                     .then(userInfoForm.changeButtonName(save))
-                    .then(userInfoForm.close());
-            },
-            userInfo: () => { return userInfo.getUserInfo(); }
+                    .then(userInfoForm.close())
+                    .catch(err => console.log(err));
+            }
         }
     );
-    edditButton.addEventListener('click', () => { userInfoForm.open(); });
-    edditButton.addEventListener('click', () => { forms.editAvatarForm.initialButtonSet(); });
+    edditButton.addEventListener('click', () => {
+        const userData = userInfo.getUserInfo();
+        userInfoForm.fillInForms([userData.name, userData.about]);
+        userInfoForm.open(); 
+    });
 
     const photoForm = new PopupWithForm(
         {
@@ -155,12 +164,12 @@ function initPage() {
                 api.saveCard(addPhotoName.value, addPhotoUrl.value)
                     .then(response => initSection.addItem(response, userInfo.getUserInfo()))
                     .then(photoForm.changeButtonName(save))
-                    .then(photoForm.close());
+                    .then(photoForm.close())
+                    .catch(err => console.log(err));
             }
         }
     );
     addButton.addEventListener('click', () => { photoForm.open(); });
-    addButton.addEventListener('click', () => { forms.addCardForm.initialButtonSet(); });
 }
 
 initPage();

@@ -46,7 +46,7 @@ export default class Card {
     }
 
     _displayLikesCount(userInfo) {
-        const likeCounter = this._element.querySelector('.element___like_title');
+        const likeCounter = this._element.querySelector('.element___like-title');
         likeCounter.textContent = this._likes.length;
         if (this.isLikedByMe(userInfo)) {
             this._element.querySelector('.button_type_like').classList.add('button_type_like-pressed');

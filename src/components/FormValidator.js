@@ -41,31 +41,24 @@ export default class FormValidator {
 
     _setEventListeners(form) {
         const inputs = form.querySelectorAll(this._inputSelector);
+        const inputErrors = form.querySelectorAll('.form__input-error');
+        
         inputs.forEach((input) => {
             input.addEventListener('input', () => {
                 this._isValid(input);
                 this._setButtonState(this._submitButton, this._form.checkValidity());
             });
         });
-    }
 
-    _isPhotoForm(form) {
-        return form.id === this._photoFormClass;
-    }
-
-    _isAvatarForm(form) {
-        return form.id === this._avatarFormClass;
-    }
-
-    initialButtonSet() {
-        if (this._isPhotoForm(this._form) || this._isAvatarForm(this._form)) {
+        this._form.addEventListener('reset', () => {
+            inputs.forEach(input => input.classList.remove('form__input_type_error'));
+            inputErrors.forEach(error => error.textContent = "");
             this._setButtonState(this._submitButton, false);
-        } else {
-            this._setButtonState(this._submitButton, true);
-        }
+        });
     }
 
     enableValidation() {
         this._setEventListeners(this._form);
+        this._setButtonState(this._submitButton, false);
     }
 }
