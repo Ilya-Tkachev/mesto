@@ -6,9 +6,9 @@ export default class PopupConfirm extends Popup {
         this._submitButton = this._popup.querySelector('.button_type_save');
     }
 
-    _setEventListeners() {
+    open() {
         this._submitButton.addEventListener('click', this._formSubmit);
-        super._setEventListeners();
+        super.open();
     }
 
     close() {
