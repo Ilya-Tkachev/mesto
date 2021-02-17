@@ -88,8 +88,8 @@ function initPage() {
                             confirmationPopup.setNewSubmitHandler({
                                 formSubmit: (event) => {
                                     event.preventDefault();
-                                    const cardId = card.remove();
-                                    api.deleteCard(cardId)
+                                    api.deleteCard(card.getId())
+                                        .then(card.remove())
                                         .then(confirmationPopup.close())
                                         .catch(err => console.log(err));
                                 }
